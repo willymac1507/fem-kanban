@@ -9,6 +9,7 @@ import {
 import {useCurrentUrl} from '@/composables/useCurrentUrl';
 import type {NavItem} from '@/types';
 import {ref} from "vue";
+import {useStore} from '@/../stores/stores'
 
 const props = defineProps<{
     items: NavItem[];
@@ -16,6 +17,7 @@ const props = defineProps<{
 
 const {isCurrentUrl} = useCurrentUrl();
 const activeBoard = ref(props.items[0] ? props.items[0].title : 'No Boards')
+const store = useStore()
 </script>
 
 <template>
@@ -31,7 +33,7 @@ const activeBoard = ref(props.items[0] ? props.items[0].title : 'No Boards')
                         :tooltip="item.title"
                         as-child
                     >
-                        <button class="cursor-pointer" @click="activeBoard = item.title">
+                        <button class="cursor-pointer" @click="activeBoard = store.activeBoard = item.title">
                             <component :is="item.icon"/>
                             <span>{{ item.title }}</span>
                         </button>
