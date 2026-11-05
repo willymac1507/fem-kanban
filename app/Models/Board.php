@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Database\Factories\BoardFactory;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+#[Unguarded]
 class Board extends Model
 {
     /** @use HasFactory<BoardFactory> */
@@ -15,5 +18,10 @@ class Board extends Model
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function subtasks(): HasManyThrough
+    {
+        return $this->hasManyThrough(Subtask::class, Task::class);
     }
 }

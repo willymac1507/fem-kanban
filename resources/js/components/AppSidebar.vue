@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {Link} from '@inertiajs/vue3';
-import {BookOpen, FolderGit2, LayoutGrid} from '@lucide/vue';
+import BoardIcon from '@/components/icons/BoardIcon.vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -13,35 +13,47 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    useSidebar,
 } from '@/components/ui/sidebar';
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
+import {inject, ref} from "vue";
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+const {isMobile, toggleSidebar, state} = useSidebar();
+const boards: Array<{ id: number, name: string }> | undefined = inject('boards');
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
-];
+const mainNavItems: NavItem[] = getNavItems();
+
+const footerNavItems: NavItem[] = [];
+
+const showMobile = ref(false);
+
+function toggleMobile() {
+    showMobile.value = !showMobile.value
+}
+
+function getNavItems() {
+    let items = [];
+    for (let i = 0; i < boards!.length; i++) {
+        items.push({
+            title: boards![i].name,
+            href: dashboard(),
+            icon: BoardIcon,
+        });
+    }
+    return items;
+}
 </script>
 
 <template>
-    <Sidebar collapsible="offcanvas" variant="inset">
-        <SidebarHeader>
+    <div v-if="isMobile && showMobile"
+         class="flex flex-col items-center absolute inset-0 w-screen h-screen z-5 bg-black opacity-65">
+        <div class="flex flex-col items-center w-3/4 bg-medium-gray rounded-xl h-1/2 mt-20 z-10">
+            <button class="my-auto bg-primary p-4 cursor-pointer" @click="toggleSidebar">Click</button>
+        </div>
+    </div>
+    <Sidebar v-else class="border-r border-lines" collapsible="offcanvas" variant="inset">
+        <SidebarHeader class="mb-10">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton as-child size="lg">
