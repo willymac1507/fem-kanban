@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import {useStore} from '@/../stores/stores'
 import {Link} from '@inertiajs/vue3';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -17,13 +18,15 @@ import {
 } from '@/components/ui/sidebar';
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
-import {inject, ref} from "vue";
+import {ref} from "vue";
 
 const {isMobile, toggleSidebar, state} = useSidebar();
-const boards: Array<{ id: number, name: string }> | undefined = inject('boards');
 
+const store = useStore();
+
+const boards = store.boards;
 const mainNavItems: NavItem[] = getNavItems();
-
+store.activeBoard = mainNavItems[0] ? mainNavItems[0].title : 'No Boards';
 const footerNavItems: NavItem[] = [];
 
 const showMobile = ref(false);

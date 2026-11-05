@@ -22,7 +22,7 @@ const store = useStore();
     <AppShell variant="sidebar">
         <AppSidebar/>
         <AppContent class="min-w-0 overflow-x-clip">
-            <AppSidebarHeader :breadcrumbs="breadcrumbs">{{ store.activeBoard }}</AppSidebarHeader>
+            <AppSidebarHeader :breadcrumbs="breadcrumbs"><h1>{{ store.activeBoard }}</h1></AppSidebarHeader>
             <slot/>
         </AppContent>
         <Toaster/>
