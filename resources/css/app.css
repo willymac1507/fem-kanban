@@ -56,7 +56,9 @@
     --color-destructive: var(--destructive);
     --color-destructive-hover: var(--destructive-hover);
     --color-destructive-foreground: var(--destructive-foreground);
-
+    --color-bullet-3: hsl(155 68% 65%);
+    --color-bullet-2: hsl(249 83% 70%);
+    --color-bullet-1: hsl(193 75% 59%);
     /*--color-border: var(--border);*/
     /*--color-input: var(--input);*/
     /*--color-ring: var(--ring);*/
