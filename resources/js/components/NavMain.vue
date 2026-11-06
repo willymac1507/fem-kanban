@@ -6,23 +6,24 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import {useCurrentUrl} from '@/composables/useCurrentUrl';
 import type {NavItem} from '@/types';
-import {ref} from "vue";
 import {useStore} from '@/../stores/stores'
+import {computed, ref} from "vue";
 
 const props = defineProps<{
     items: NavItem[];
 }>();
 
-const {isCurrentUrl} = useCurrentUrl();
 const activeBoard = ref(props.items[0] ? props.items[0].title : 'No Boards')
 const store = useStore()
+const boardCount = computed(() => store.boardsCount)
 </script>
 
 <template>
     <SidebarGroup class="pr-6 py-0">
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarGroupLabel>
+            <h4 class="uppercase text-medium-gray mb-2">All Boards ({{ boardCount }})</h4>
+        </SidebarGroupLabel>
         <SidebarMenu>
             <SidebarMenuItem v-if="items.length === 0">None</SidebarMenuItem>
             <SidebarMenuItem v-for="item in items" v-else :key="item.title">

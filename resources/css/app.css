@@ -8,10 +8,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-sans:
-        'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
 
     --color-main-purple: hsl(242 48% 58%);
     --color-main-purple-hover: hsl(243 100% 82%);
@@ -28,7 +27,6 @@
     /*--radius-lg: var(--radius);*/
     /*--radius-md: calc(var(--radius) - 2px);*/
     /*--radius-sm: calc(var(--radius) - 4px);*/
-
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
@@ -41,10 +39,8 @@
 
     /*--color-card: var(--card);*/
     /*--color-card-foreground: var(--card-foreground);*/
-
     /*--color-popover: var(--popover);*/
     /*--color-popover-foreground: var(--popover-foreground);*/
-
     --color-primary: var(--primary);
     --color-primary-hover: var(--primary-hover);
     --color-primary-foreground: var(--primary-foreground);
@@ -55,10 +51,8 @@
 
     /*--color-muted: var(--muted);*/
     /*--color-muted-foreground: var(--muted-foreground);*/
-
     /*--color-accent: var(--accent);*/
     /*--color-accent-foreground: var(--accent-foreground);*/
-
     --color-destructive: var(--destructive);
     --color-destructive-hover: var(--destructive-hover);
     --color-destructive-foreground: var(--destructive-foreground);
@@ -66,14 +60,12 @@
     /*--color-border: var(--border);*/
     /*--color-input: var(--input);*/
     /*--color-ring: var(--ring);*/
-
     /*--color-chart-1: var(--chart-1);*/
     /*--color-chart-2: var(--chart-2);*/
     /*--color-chart-3: var(--chart-3);*/
     /*--color-chart-4: var(--chart-4);*/
     /*--color-chart-5: var(--chart-5);*/
-
-    /*--color-sidebar: var(--sidebar-background);*/
+    --color-sidebar: var(--sidebar-background);
     /*--color-sidebar-foreground: var(--sidebar-foreground);*/
     /*--color-sidebar-primary: var(--sidebar-primary);*/
     /*--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);*/
@@ -104,10 +96,9 @@
 @layer utilities {
     body,
     html {
-        --font-sans:
-            'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-            'Noto Color Emoji';
+        --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
     }
 
     h1 {
@@ -155,7 +146,7 @@
     --chart-4: hsl(43 74% 66%);
     --chart-5: hsl(27 87% 67%);
     --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
+    --sidebar-background: hsl(0, 0%, 100%);
     --sidebar-foreground: hsl(240 5.3% 26.1%);
     --sidebar-primary: hsl(0 0% 10%);
     --sidebar-primary-foreground: hsl(0 0% 98%);
@@ -194,7 +185,7 @@
     --chart-3: hsl(30 80% 55%);
     --chart-4: hsl(280 65% 60%);
     --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
+    --sidebar-background: hsl(235 12% 19%);
     --sidebar-foreground: hsl(0 0% 95.9%);
     --sidebar-primary: hsl(360, 100%, 100%);
     --sidebar-primary-foreground: hsl(0 0% 100%);

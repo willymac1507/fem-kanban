@@ -18,15 +18,16 @@ import {
 } from '@/components/ui/sidebar';
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
-import {ref} from "vue";
+import {inject, ref} from "vue";
+import {Board} from "@/types/data";
 
 const {isMobile, toggleSidebar, state} = useSidebar();
-
 const store = useStore();
-
-const boards = store.boards;
+const boards: Array<Board> | undefined = inject('boards');
 const mainNavItems: NavItem[] = getNavItems();
+
 store.activeBoard = mainNavItems[0] ? mainNavItems[0].title : 'No Boards';
+store.boardsCount = boards!.length;
 const footerNavItems: NavItem[] = [];
 
 const showMobile = ref(false);

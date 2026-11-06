@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import AppSLayout from '@/layouts/app/AppSidebarLayout.vue'
 import {useStore} from "@/../stores/stores";
+import {provide} from "vue";
 
 interface Props {
     boards: Array<{ id: number, name: string }>;
@@ -8,7 +9,8 @@ interface Props {
 
 const props = defineProps<Props>();
 const store = useStore();
-store.boards = props.boards;
+provide('boards', props.boards);
+console.log(props.boards)
 
 </script>
 

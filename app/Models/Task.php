@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Unguarded]
 class Task extends Model
 {
-    public function board(): BelongsTo
+    public function column(): BelongsTo
     {
-        return $this->belongsTo(Board::class);
+        return $this->belongsTo(Column::class);
     }
 
     public function subtasks(): HasMany

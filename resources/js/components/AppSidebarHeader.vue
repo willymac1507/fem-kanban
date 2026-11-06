@@ -14,7 +14,7 @@ withDefaults(
 
 <template>
     <header
-        class="flex h-25 shrink-0 items-center gap-2 border-b border-lines px-6 transition-[width,height] ease-linear md:px-4"
+        class="bg-sidebar flex h-25 shrink-0 items-center gap-2 border-b border-lines px-6 transition-[width,height] ease-linear md:px-4"
     >
         <div class="flex items-center gap-2">
             <template v-if="breadcrumbs && breadcrumbs.length > 0">
