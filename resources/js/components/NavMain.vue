@@ -6,9 +6,11 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import AddBoard from '@/components/AddBoard.vue';
 import type {NavItem} from '@/types';
 import {useStore} from '@/../stores/stores'
 import {computed, ref} from "vue";
+
 
 const props = defineProps<{
     items: NavItem[];
@@ -17,6 +19,11 @@ const props = defineProps<{
 const activeBoard = ref(props.items[0] ? props.items[0].title : 'No Boards')
 const store = useStore()
 const boardCount = computed(() => store.boardsCount)
+const addBoardOpen = ref(false)
+
+function addBoard() {
+    addBoardOpen.value = true
+}
 </script>
 
 <template>
@@ -25,8 +32,7 @@ const boardCount = computed(() => store.boardsCount)
             <h4 class="uppercase text-medium-gray mb-2">All Boards ({{ boardCount }})</h4>
         </SidebarGroupLabel>
         <SidebarMenu>
-            <SidebarMenuItem v-if="items.length === 0">None</SidebarMenuItem>
-            <SidebarMenuItem v-for="item in items" v-else :key="item.title">
+            <SidebarMenuItem v-for="item in items" :key="item.title">
                 <div :class="item.title === activeBoard ? 'text-primary bg-main-purple' : 'text-neutral-600'"
                      class="flex items-center gap-2 rounded-r-full">
                     <SidebarMenuButton
@@ -41,6 +47,16 @@ const boardCount = computed(() => store.boardsCount)
                     </SidebarMenuButton>
                 </div>
             </SidebarMenuItem>
+            <div class="flex items-center gap-2 rounded-r-full">
+
+                <SidebarMenuButton as-child>
+                    <AddBoard :open="addBoardOpen"/>
+                </SidebarMenuButton>
+            </div>
+            <SidebarMenuItem>
+
+            </SidebarMenuItem>
         </SidebarMenu>
     </SidebarGroup>
+
 </template>

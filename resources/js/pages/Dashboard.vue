@@ -3,7 +3,7 @@ import {Head} from '@inertiajs/vue3';
 import {dashboard} from '@/routes';
 import {computed, ComputedRef, inject} from "vue";
 import {useStore} from "../../stores/stores";
-import {Board, Column, Subtask, Task} from "@/types/data";
+import {Board, Subtask, Task} from "@/types/data";
 
 defineOptions({
     layout: {
@@ -21,23 +21,6 @@ const store = useStore();
 const board: ComputedRef = computed(() => {
     return boards!.filter(board => board.name === store.activeBoard)[0];
 })
-
-
-function setColor(taskColumn: Column): string {
-    console.log(taskColumn)
-    let color
-    let subtasks = taskColumn.tasks.map(countSubtasks)
-    let completed = taskColumn.tasks.map(countCompleted)
-    if (sumArray(completed) === 0) {
-        color = 'bg-red-500'
-    } else if (sumArray(subtasks) === sumArray(completed)) {
-        color = 'bg-green-500'
-    } else {
-        color = 'bg-yellow-500'
-    }
-
-    return color
-}
 
 function countSubtasks(task: Task) {
     return task.subtasks.length
@@ -62,10 +45,15 @@ function sumArray(arr: Array<number>) {
     >
         <div v-for="column in board.columns" class="flex flex-col gap-4 w-70">
             <div class="flex flex-row justify-start gap-2 items-center">
-                <span :class="setColor(column)" class="w-3 h-3 rounded-full"></span>
+                <span :class="'bg-bullet-' + column.color" class="w-3 h-3 rounded-full"></span>
                 <h4 class="text-medium-gray uppercase">{{ column.title }} ({{ column.tasks.length }})</h4>
             </div>
-            <h4 v-for="task in column.tasks">{{ task.title }}</h4>
+            <div v-for="task in column.tasks" class="w-full bg-dark-gray rounded-lg p-4 flex flex-col gap-2">
+                <h3>{{ task.title }}</h3>
+                <p class="font-bold body-md text-medium-gray">
+                    {{ countCompleted(task) }} of {{ countSubtasks(task) }} subtasks
+                </p>
+            </div>
         </div>
     </div>
 </template>

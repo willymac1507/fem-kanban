@@ -4,6 +4,7 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source inline("bg-bullet-{1..10..1}");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -30,12 +31,12 @@
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
-    --text-xl: 1.5rem;
-    --text-lg: 1.125rem;
-    --text-md: 0.9375rem;
-    --text-sm: 0.75rem;
-
-    --tracking-widest: 0.15rem;
+    --text-heading-xl: 1.5rem;
+    --text-heading-lg: 1.125rem;
+    --text-heading-md: 0.9375rem;
+    --text-heading-sm: 0.75rem;
+    --text-body-lg: 13px;
+    --text-body-md: 12px;
 
     /*--color-card: var(--card);*/
     /*--color-card-foreground: var(--card-foreground);*/
@@ -56,9 +57,18 @@
     --color-destructive: var(--destructive);
     --color-destructive-hover: var(--destructive-hover);
     --color-destructive-foreground: var(--destructive-foreground);
-    --color-bullet-3: hsl(155 68% 65%);
-    --color-bullet-2: hsl(249 83% 70%);
-    --color-bullet-1: hsl(193 75% 59%);
+
+
+    --color-bullet-1: #6ca1eb;
+    --color-bullet-2: #32c34a;
+    --color-bullet-3: #5bb598;
+    --color-bullet-4: #f59e0b;
+    --color-bullet-5: #f44336;
+    --color-bullet-6: #009688;
+    --color-bullet-7: #ff9800;
+    --color-bullet-8: #9c27b0;
+    --color-bullet-9: #2196f3;
+    --color-bullet-10: #795548;
     /*--color-border: var(--border);*/
     /*--color-input: var(--input);*/
     /*--color-ring: var(--ring);*/
@@ -104,19 +114,27 @@
     }
 
     h1 {
-        @apply font-bold text-xl leading-7.5;
+        @apply font-bold text-heading-xl leading-7.5;
     }
 
     h2 {
-        @apply font-bold text-lg leading-5.75;
+        @apply font-bold text-heading-lg leading-5.75;
     }
 
     h3 {
-        @apply font-bold text-md leading-4.75;
+        @apply font-bold text-heading-md leading-4.75;
     }
 
     h4 {
-        @apply font-bold text-sm leading-3.75 tracking-widest;
+        @apply font-bold text-heading-sm leading-3.75 tracking-widest;
+    }
+
+    .body-lg {
+        @apply text-body-lg leading-5.75;
+    }
+
+    .body-md {
+        @apply text-body-md leading-3.75;
     }
 }
 
