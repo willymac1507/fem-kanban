@@ -2,13 +2,14 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
 import {ref} from "vue";
 import BoardIcon from '@/components/icons/BoardIcon.vue';
+import NewBoardForm from "./NewBoardForm.vue";
+
 
 interface Props {
     open: boolean;
@@ -27,16 +28,10 @@ const open = ref(props.open);
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                <DialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                </DialogDescription>
+                <DialogTitle>Add New Board</DialogTitle>
             </DialogHeader>
+            <NewBoardForm/>
         </DialogContent>
     </Dialog>
 </template>
 
-<style scoped>
-
-</style>
