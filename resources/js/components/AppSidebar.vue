@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {useStore} from '@/../stores/stores'
-import {Link} from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -18,16 +18,18 @@ import {
 } from '@/components/ui/sidebar';
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
-import {inject, ref} from "vue";
-import {Board} from "@/types/data";
+import {computed, ComputedRef, inject, ref} from "vue";
+import {boardsKey} from "@/types/injection-keys";
 
 const {isMobile, toggleSidebar, state} = useSidebar();
 const store = useStore();
-const boards: Array<Board> | undefined = inject('boards');
-const mainNavItems: NavItem[] = getNavItems();
+const page = usePage();
+const boards = inject(boardsKey, computed(() => []));
+const mainNavItems: ComputedRef<NavItem[]> = computed(() => getNavItems());
 
-store.activeBoard = mainNavItems[0] ? mainNavItems[0].title : 'No Boards';
-store.boardsCount = boards!.length;
+store.activeBoard = mainNavItems.value[0] ? mainNavItems.value[0].title :
+    'No Boards';
+store.boardsCount = boards.value!.length;
 const footerNavItems: NavItem[] = [];
 
 const showMobile = ref(false);
@@ -38,9 +40,9 @@ function toggleMobile() {
 
 function getNavItems() {
     let items = [];
-    for (let i = 0; i < boards!.length; i++) {
+    for (let i = 0; i < boards.value!.length; i++) {
         items.push({
-            title: boards![i].name,
+            title: boards.value![i].name,
             href: dashboard(),
             icon: BoardIcon,
         });
@@ -52,11 +54,15 @@ function getNavItems() {
 <template>
     <div v-if="isMobile && showMobile"
          class="flex flex-col items-center absolute inset-0 w-screen h-screen z-5 bg-black opacity-65">
-        <div class="flex flex-col items-center w-3/4 bg-medium-gray rounded-xl h-1/2 mt-20 z-10">
-            <button class="my-auto bg-primary p-4 cursor-pointer" @click="toggleSidebar">Click</button>
+        <div
+            class="flex flex-col items-center w-3/4 bg-medium-gray rounded-xl h-1/2 mt-20 z-10">
+            <button class="my-auto bg-primary p-4 cursor-pointer"
+                    @click="toggleSidebar">Click
+            </button>
         </div>
     </div>
-    <Sidebar v-else class="border-r border-lines" collapsible="offcanvas" variant="inset">
+    <Sidebar v-else class="border-r border-lines" collapsible="offcanvas"
+             variant="inset">
         <SidebarHeader class="mb-10">
             <SidebarMenu>
                 <SidebarMenuItem>

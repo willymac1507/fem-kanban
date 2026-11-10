@@ -16,7 +16,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const open = ref(props.open);
+const open = ref(false);
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const open = ref(props.open);
             <DialogHeader>
                 <DialogTitle>Add New Board</DialogTitle>
             </DialogHeader>
-            <NewBoardForm/>
+            <NewBoardForm @success="open = false"/>
         </DialogContent>
     </Dialog>
 </template>

@@ -3,7 +3,8 @@ import {Head} from '@inertiajs/vue3';
 import {dashboard} from '@/routes';
 import {computed, ComputedRef, inject} from "vue";
 import {useStore} from "../../stores/stores";
-import {Board, Subtask, Task} from "@/types/data";
+import {Subtask, Task} from "@/types/data";
+import {boardsKey} from "@/types/injection-keys";
 
 defineOptions({
     layout: {
@@ -16,10 +17,10 @@ defineOptions({
     },
 });
 
-const boards: Array<Board> | undefined = inject('boards') ? inject('boards') : new Array<Board>();
+const boards = inject(boardsKey, computed(() => []))
 const store = useStore();
 const board: ComputedRef = computed(() => {
-    return boards!.filter(board => board.name === store.activeBoard)[0];
+    return boards.value!.filter(board => board.name === store.activeBoard)[0];
 })
 
 function countSubtasks(task: Task) {
@@ -45,13 +46,17 @@ function sumArray(arr: Array<number>) {
     >
         <div v-for="column in board.columns" class="flex flex-col gap-4 w-70">
             <div class="flex flex-row justify-start gap-2 items-center">
-                <span :class="'bg-bullet-' + column.color" class="w-3 h-3 rounded-full"></span>
-                <h4 class="text-medium-gray uppercase">{{ column.title }} ({{ column.tasks.length }})</h4>
+                <span :class="'bg-bullet-' + column.color"
+                      class="w-3 h-3 rounded-full"></span>
+                <h4 class="text-medium-gray uppercase">{{ column.title }}
+                    ({{ column.tasks.length }})</h4>
             </div>
-            <div v-for="task in column.tasks" class="w-full bg-dark-gray rounded-lg p-4 flex flex-col gap-2">
+            <div v-for="task in column.tasks"
+                 class="w-full bg-dark-gray rounded-lg p-4 flex flex-col gap-2">
                 <h3>{{ task.title }}</h3>
                 <p class="font-bold body-md text-medium-gray">
-                    {{ countCompleted(task) }} of {{ countSubtasks(task) }} subtasks
+                    {{ countCompleted(task) }} of {{ countSubtasks(task) }}
+                    subtasks
                 </p>
             </div>
         </div>

@@ -12,6 +12,7 @@ const columns = ref([
 ]);
 const columnCounter = ref(1);
 
+const emit = defineEmits(['success'])
 const form = useForm({
     name: '',
     columns: [],
@@ -21,6 +22,7 @@ const submit = () => {
     form.post('/dashboard', {
         onSuccess: () => {
             console.log('success')
+            emit('success')
         }
     })
 }
