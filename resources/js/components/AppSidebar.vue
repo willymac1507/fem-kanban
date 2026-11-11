@@ -5,7 +5,6 @@ import BoardIcon from '@/components/icons/BoardIcon.vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
-import NavUser from '@/components/NavUser.vue';
 import {
     Sidebar,
     SidebarContent,
@@ -81,7 +80,6 @@ function getNavItems() {
 
         <SidebarFooter>
             <NavFooter :items="footerNavItems"/>
-            <NavUser/>
         </SidebarFooter>
     </Sidebar>
     <slot/>

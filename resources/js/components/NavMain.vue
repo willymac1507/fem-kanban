@@ -19,28 +19,27 @@ const props = defineProps<{
 const activeBoard = ref(props.items[0] ? props.items[0].title : 'No Boards')
 const store = useStore()
 const boardCount = computed(() => store.boardsCount)
-const addBoardOpen = ref(false)
 
-function addBoard() {
-    addBoardOpen.value = true
-}
 </script>
 
 <template>
     <SidebarGroup class="pr-6 py-0">
         <SidebarGroupLabel>
-            <h4 class="uppercase text-medium-gray mb-2">All Boards ({{ boardCount }})</h4>
+            <h4 class="uppercase text-medium-gray mb-2">All Boards
+                ({{ boardCount }})</h4>
         </SidebarGroupLabel>
         <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-                <div :class="item.title === activeBoard ? 'text-primary bg-main-purple' : 'text-neutral-600'"
-                     class="flex items-center gap-2 rounded-r-full">
+                <div
+                    :class="item.title === activeBoard ? 'text-primary bg-main-purple' : 'text-neutral-600'"
+                    class="flex items-center gap-2 rounded-r-full">
                     <SidebarMenuButton
                         :is-active="item.title === activeBoard"
                         :tooltip="item.title"
                         as-child
                     >
-                        <button class="cursor-pointer" @click="activeBoard = store.activeBoard = item.title">
+                        <button class="cursor-pointer"
+                                @click="activeBoard = store.activeBoard = item.title">
                             <component :is="item.icon"/>
                             <span>{{ item.title }}</span>
                         </button>
@@ -50,7 +49,7 @@ function addBoard() {
             <div class="flex items-center gap-2 rounded-r-full">
 
                 <SidebarMenuButton as-child>
-                    <AddBoard :open="addBoardOpen"/>
+                    <AddBoard/>
                 </SidebarMenuButton>
             </div>
             <SidebarMenuItem>

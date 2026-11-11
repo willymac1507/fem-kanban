@@ -129,6 +129,10 @@
         @apply font-bold text-heading-sm leading-3.75 tracking-widest;
     }
 
+    button {
+        @apply cursor-pointer;
+    }
+
     .body-lg {
         @apply text-body-lg leading-5.75;
     }

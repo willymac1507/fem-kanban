@@ -34,7 +34,8 @@ function addColumn() {
 
 function deleteColumn(id: number) {
     if (columns.value.length === 1) return;
-    columns.value = columns.value.filter((column) => column !== id);
+    columns.value = columns.value.filter((column, index) => index !== id);
+    form.columns.splice(id, 1);
 }
 
 

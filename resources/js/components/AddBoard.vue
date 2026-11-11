@@ -10,12 +10,6 @@ import {ref} from "vue";
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import NewBoardForm from "./NewBoardForm.vue";
 
-
-interface Props {
-    open: boolean;
-}
-
-const props = defineProps<Props>();
 const open = ref(false);
 </script>
 
