@@ -3,8 +3,8 @@ import {useStore} from '@/../stores/stores'
 import {Link, usePage} from '@inertiajs/vue3';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import AppLogo from '@/components/AppLogo.vue';
-import NavFooter from '@/components/NavFooter.vue';
-import NavMain from '@/components/NavMain.vue';
+import NavFooter from '@/components/nav/NavFooter.vue';
+import NavMain from '@/components/nav/NavMain.vue';
 import {
     Sidebar,
     SidebarContent,

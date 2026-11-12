@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dialog'
 import {ref} from "vue";
 import BoardIcon from '@/components/icons/BoardIcon.vue';
-import NewBoardForm from "./NewBoardForm.vue";
+import NewBoardForm from "./forms/NewBoardForm.vue";
 
 const open = ref(false);
 </script>

@@ -8,6 +8,7 @@ export type Column = {
     id: number;
     board_id: number;
     title: string;
+    color: number;
     tasks: Task[];
 }
 

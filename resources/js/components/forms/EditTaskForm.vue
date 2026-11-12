@@ -4,8 +4,8 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input";
 import CrossIcon from "@/components/icons/CrossIcon.vue";
-import OptionalInput from "@/components/OptionalInput.vue";
-import {computed, ComputedRef, ref} from "vue";
+import OptionalInput from "@/components/forms/OptionalInput.vue";
+import {computed, ref} from "vue";
 import {
     Select,
     SelectContent,
@@ -14,11 +14,12 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
-import {Board} from "@/types/data";
-import {useStore} from "../../stores/stores";
+import {Board, Task} from "@/types/data";
+import {useStore} from "../../../stores/stores";
 
 interface Props {
-    boards: Board[]
+    board: Board
+    task: Task
 }
 
 interface Status {
@@ -26,21 +27,19 @@ interface Status {
     status: string
 }
 
-const emit = defineEmits(['taskCreated'])
+const emit = defineEmits(['taskUpdated'])
 
 const props = defineProps<Props>()
 const store = useStore()
 const activeBoard = ref(store.activeBoard)
-const thisBoard: ComputedRef<Board | undefined> = computed(() => {
-    return props.boards.find(board => board.name === activeBoard.value)
-})
+const thisBoard: Board = props.board
 
 const form = useForm({
-    column_id: 0,
-    title: '',
-    description: '',
-    status: '',
-    subTasks: []
+    column_id: props.task.column_id,
+    title: props.task.title,
+    description: props.task.description,
+    status: props.task.status,
+    subTasks: props.task.subtasks.map((subTask) => subTask.title),
 })
 
 const status = computed({
@@ -51,8 +50,8 @@ const status = computed({
     }
 })
 
-const subTasks = ref([1]);
-const subTaskCounter = ref(1);
+const subTasks = ref(props.task.subtasks.map((subTask, index) => index + 1));
+const subTaskCounter = ref(subTasks.value.length);
 
 function addSubTask() {
     subTaskCounter.value++;
@@ -65,10 +64,11 @@ function deleteSubTask(id: number) {
 }
 
 function submit() {
-    form.post('/boards/tasks/store', {
+    console.log(props.task.id)
+    form.post('/boards/tasks/' + props.task.id + '/update', {
         onSuccess: () => {
             form.reset()
-            emit('taskCreated')
+            emit('taskUpdated')
         }
     })
 }
@@ -161,7 +161,7 @@ function submit() {
                 class="w-full h-10 bg-main-purple text-white font-bold text-xs rounded-full"
                 type="submit"
             >
-                Create Task
+                Save Task
             </button>
         </div>
 

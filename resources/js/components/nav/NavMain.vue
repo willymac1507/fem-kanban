@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sidebar';
 import AddBoard from '@/components/AddBoard.vue';
 import type {NavItem} from '@/types';
-import {useStore} from '@/../stores/stores'
+import {useStore} from '../../../stores/stores'
 import {computed, ref} from "vue";
 
 

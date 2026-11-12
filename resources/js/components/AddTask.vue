@@ -7,7 +7,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import {computed, inject, ref} from "vue";
-import NewTaskForm from "@/components/NewTaskForm.vue";
+import NewTaskForm from "@/components/forms/NewTaskForm.vue";
 import {boardsKey} from "@/types/injection-keys";
 
 const boards = inject(boardsKey, computed(() => []));

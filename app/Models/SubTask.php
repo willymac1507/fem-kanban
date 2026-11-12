@@ -13,4 +13,11 @@ class SubTask extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'is_completed' => 'boolean',
+        ];
+    }
 }

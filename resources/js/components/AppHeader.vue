@@ -1,12 +1,12 @@
-<script setup lang="ts">
-import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from '@lucide/vue';
-import { computed } from 'vue';
+<script lang="ts" setup>
+import {Link, usePage} from '@inertiajs/vue3';
+import {BookOpen, Folder, LayoutGrid, Menu, Search} from '@lucide/vue';
+import {computed} from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import {Button} from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -31,12 +31,12 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import UserMenuContent from '@/components/UserMenuContent.vue';
-import { useCurrentUrl } from '@/composables/useCurrentUrl';
-import { getInitials } from '@/composables/useInitials';
-import { toUrl } from '@/lib/utils';
-import { dashboard } from '@/routes';
-import type { BreadcrumbItem, NavItem } from '@/types';
+import UserMenuContent from '@/components/user/UserMenuContent.vue';
+import {useCurrentUrl} from '@/composables/useCurrentUrl';
+import {getInitials} from '@/composables/useInitials';
+import {toUrl} from '@/lib/utils';
+import {dashboard} from '@/routes';
+import type {BreadcrumbItem, NavItem} from '@/types';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];
@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const page = usePage();
 const auth = computed(() => page.props.auth);
-const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
+const {isCurrentUrl, whenCurrentUrl} = useCurrentUrl();
 
 const activeItemStyles =
     'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
@@ -84,16 +84,17 @@ const rightNavItems: NavItem[] = [
                     <Sheet>
                         <SheetTrigger :as-child="true">
                             <Button
-                                variant="ghost"
-                                size="icon"
                                 class="mr-2 h-9 w-9"
+                                size="icon"
+                                variant="ghost"
                             >
-                                <Menu class="h-5 w-5" />
+                                <Menu class="h-5 w-5"/>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" class="w-[300px] p-6">
+                        <SheetContent class="w-[300px] p-6" side="left">
                             <SheetTitle class="sr-only"
-                                >Navigation menu</SheetTitle
+                            >Navigation menu
+                            </SheetTitle
                             >
                             <SheetHeader class="flex justify-start text-left">
                                 <AppLogoIcon
@@ -107,18 +108,18 @@ const rightNavItems: NavItem[] = [
                                     <Link
                                         v-for="item in mainNavItems"
                                         :key="item.title"
-                                        :href="item.href"
-                                        class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
                                         :class="
                                             whenCurrentUrl(
                                                 item.href,
                                                 activeItemStyles,
                                             )
                                         "
+                                        :href="item.href"
+                                        class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
                                     >
                                         <component
-                                            v-if="item.icon"
                                             :is="item.icon"
+                                            v-if="item.icon"
                                             class="h-5 w-5"
                                         />
                                         {{ item.title }}
@@ -129,13 +130,13 @@ const rightNavItems: NavItem[] = [
                                         v-for="item in rightNavItems"
                                         :key="item.title"
                                         :href="toUrl(item.href)"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
                                         class="flex items-center space-x-2 text-sm font-medium"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
                                     >
                                         <component
-                                            v-if="item.icon"
                                             :is="item.icon"
+                                            v-if="item.icon"
                                             class="h-5 w-5"
                                         />
                                         <span>{{ item.title }}</span>
@@ -147,7 +148,7 @@ const rightNavItems: NavItem[] = [
                 </div>
 
                 <Link :href="dashboard()" class="flex items-center gap-x-2">
-                    <AppLogo />
+                    <AppLogo/>
                 </Link>
 
                 <!-- Desktop Menu -->
@@ -173,8 +174,8 @@ const rightNavItems: NavItem[] = [
                                     :href="item.href"
                                 >
                                     <component
-                                        v-if="item.icon"
                                         :is="item.icon"
+                                        v-if="item.icon"
                                         class="mr-2 h-4 w-4"
                                     />
                                     {{ item.title }}
@@ -191,9 +192,9 @@ const rightNavItems: NavItem[] = [
                 <div class="ml-auto flex items-center space-x-2">
                     <div class="relative flex items-center space-x-1">
                         <Button
-                            variant="ghost"
-                            size="icon"
                             class="group h-9 w-9 cursor-pointer"
+                            size="icon"
+                            variant="ghost"
                         >
                             <Search
                                 class="size-5 opacity-80 group-hover:opacity-100"
@@ -209,19 +210,19 @@ const rightNavItems: NavItem[] = [
                                     <Tooltip>
                                         <TooltipTrigger>
                                             <Button
-                                                variant="ghost"
-                                                size="icon"
                                                 as-child
                                                 class="group h-9 w-9 cursor-pointer"
+                                                size="icon"
+                                                variant="ghost"
                                             >
                                                 <a
                                                     :href="toUrl(item.href)"
-                                                    target="_blank"
                                                     rel="noopener noreferrer"
+                                                    target="_blank"
                                                 >
                                                     <span class="sr-only">{{
-                                                        item.title
-                                                    }}</span>
+                                                            item.title
+                                                        }}</span>
                                                     <component
                                                         :is="item.icon"
                                                         class="size-5 opacity-80 group-hover:opacity-100"
@@ -241,17 +242,17 @@ const rightNavItems: NavItem[] = [
                     <DropdownMenu>
                         <DropdownMenuTrigger :as-child="true">
                             <Button
-                                variant="ghost"
-                                size="icon"
                                 class="relative size-10 w-auto rounded-full p-1 focus-within:ring-2 focus-within:ring-primary"
+                                size="icon"
+                                variant="ghost"
                             >
                                 <Avatar
                                     class="size-8 overflow-hidden rounded-full"
                                 >
                                     <AvatarImage
                                         v-if="auth.user.avatar"
-                                        :src="auth.user.avatar"
                                         :alt="auth.user.name"
+                                        :src="auth.user.avatar"
                                     />
                                     <AvatarFallback
                                         class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white"
@@ -262,7 +263,7 @@ const rightNavItems: NavItem[] = [
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" class="w-56">
-                            <UserMenuContent :user="auth.user" />
+                            <UserMenuContent :user="auth.user"/>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
@@ -276,7 +277,7 @@ const rightNavItems: NavItem[] = [
             <div
                 class="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl"
             >
-                <Breadcrumbs :breadcrumbs="breadcrumbs" />
+                <Breadcrumbs :breadcrumbs="breadcrumbs"/>
             </div>
         </div>
     </div>
