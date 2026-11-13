@@ -22,7 +22,7 @@ export type Task = {
 }
 
 export type Subtask = {
-    id: number;
+    id?: number;
     task_id: number;
     title: string;
     is_completed: boolean;

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import {Board, Subtask, Task} from "@/types/data";
-import {ref, watch} from "vue";
+import {ref} from "vue";
 import {
     Dialog,
     DialogContent,
@@ -24,14 +24,11 @@ const props = defineProps<Props>()
 
 const subtasks = ref(props.task.subtasks)
 
-watch(subtasks, () => {
-    alert('subtasks changed')
-})
-
 const open = ref(false);
 const editOpen = ref(false);
 const viewOpen = ref(false);
 const deleteOpen = ref(false);
+const viewMenuOpen = ref(false);
 
 function updateSubTask(id: number, isCompleted: boolean) {
     router.patch(('/subtasks/' + id), {
@@ -51,7 +48,8 @@ function countCompleted(task: Task) {
 }
 
 function openEdit() {
-    open.value = false;
+    viewOpen.value = false;
+    viewMenuOpen.value = false;
     editOpen.value = true;
 }
 </script>
@@ -73,18 +71,31 @@ function openEdit() {
         <DialogContent :showCloseButton="false" class="w-120">
             <DialogHeader>
                 <DialogTitle class="mb-6">
-                    <div class="flex flex-row items-center gap-2">
+                    <div class="relative flex flex-row items-center gap-2">
                         <h2>{{
                                 task.title
                             }}</h2>
-                        <div class="ml-auto">
-                            <VerticalElipsisIcon class="size-5 cursor-pointer"/>
+                        <div class="ml-auto w-1.25">
+                            <VerticalElipsisIcon
+                                class="size-5 cursor-pointer"
+                                @click="viewMenuOpen = !viewMenuOpen"/>
+                        </div>
+                        <div v-if="viewMenuOpen"
+                             class="absolute -right-24 top-12 w-48 p-4 bg-vdark-gray rounded-md flex flex-col gap-4 justify-between">
+                            <button
+                                class="text-left text-sm
+                                text-medium-gray" @click="openEdit">Edit
+                                Task
+                            </button>
+                            <button class="text-left text-sm text-red">Delete
+                                Task
+                            </button>
                         </div>
                     </div>
 
                 </DialogTitle>
-                <DialogDescription v-if="task.description"
-                                   class="shrink text-body-md leading-6 text-medium-gray">
+                <DialogDescription
+                    class="min-h-17 shrink text-body-md leading-6 text-medium-gray">
                     {{
                         task.description
                     }}
@@ -97,18 +108,15 @@ function openEdit() {
                     {{ countSubtasks(task) }})
                 </div>
                 <div v-for="subtask in task.subtasks"
-                     :class="subtask.is_completed ?
-                     'bg-main-black line-through' :
-                'bg-main-purple/24'"
-                     class="flex flex-row gap-4 items-center  rounded-sm p-2"
+                     class="bg-vdark-gray focus-visible:bg-main-purple/24 flex flex-row gap-4 items-center  rounded-sm p-2"
                 >
                     <Checkbox :id="'toggle'+subtask.id"
                               v-model="subtask.is_completed"
                               class="bg-dark-gray border-main-purple/24 data-[state=checked]:border-main-purple data-[state=checked]:bg-main-purple data-[state=checked]:text-white"
-                              @update:modelValue="updateSubTask(subtask.id,
+                              @update:modelValue="updateSubTask(subtask.id!,
                               subtask.is_completed)"
                     />
-                    <p :class="subtask.is_completed ? 'text-medium-gray' :
+                    <p :class="subtask.is_completed ? 'text-medium-gray line-through' :
                     'text-white'"
                        class="text-left text-xs  font-bold">{{
                             subtask.title

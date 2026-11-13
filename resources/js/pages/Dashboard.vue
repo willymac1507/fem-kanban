@@ -43,7 +43,7 @@ function sumArray(arr: Array<number>) {
     <Head title="Dashboard"/>
 
     <div
-        class="flex h-full flex-1 flex-row gap-4 overflow-x-auto p-4"
+        class="bg-vdark-gray flex h-full flex-1 flex-row gap-4 overflow-x-auto p-4"
     >
         <BoardColumn :board="board"/>
     </div>

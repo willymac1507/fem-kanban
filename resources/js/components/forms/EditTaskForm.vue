@@ -27,6 +27,18 @@ interface Status {
     status: string
 }
 
+class SubTask {
+    id?: number;
+    task_id: number;
+    title: string;
+    is_completed: boolean = false;
+
+    constructor(task_id: number, title: string) {
+        this.task_id = task_id;
+        this.title = title;
+    }
+}
+
 const emit = defineEmits(['taskUpdated'])
 
 const props = defineProps<Props>()
@@ -39,7 +51,7 @@ const form = useForm({
     title: props.task.title,
     description: props.task.description,
     status: props.task.status,
-    subTasks: props.task.subtasks.map((subTask) => subTask.title),
+    subTasks: props.task.subtasks,
 })
 
 const status = computed({
@@ -54,8 +66,9 @@ const subTasks = ref(props.task.subtasks.map((subTask, index) => index + 1));
 const subTaskCounter = ref(subTasks.value.length);
 
 function addSubTask() {
-    subTaskCounter.value++;
-    subTasks.value.push(subTaskCounter.value);
+    // subTaskCounter.value++;
+    // subTasks.value.push(subTaskCounter.value);
+    form.subTasks.push(new SubTask(props.task.id, ''));
 }
 
 function deleteSubTask(id: number) {
@@ -71,6 +84,13 @@ function submit() {
             emit('taskUpdated')
         }
     })
+}
+
+function getSubtaskError(index: number): string | undefined {
+    if (form.errors[`subTasks.${index}.title`]) {
+        return 'The title field is required.'
+    }
+
 }
 </script>
 
@@ -98,23 +118,29 @@ function submit() {
         <div>
             <Label for="subtasks">Subtasks</Label>
             <div class="flex flex-col w-full gap-3">
-                <div v-for="(subTask, index) in subTasks" :key="index"
-                     class="flex flex-row w-full gap-3 justify-start items-center">
-                    <OptionalInput
-                        :id="subTask"
-                        v-model="form.subTasks[index]"
-                        name="subTasks[]"
-                        placeholder="e.g. Make Coffee"
-                    />
-                    <button v-if="subTasks.length > 1" class="cursor-pointer"
-                            type="button" @click="deleteSubTask(index)">
-                        <component :is="CrossIcon"></component>
-                    </button>
+                <div v-for="(subTask, index) in form.subTasks" :key="index"
+                     class="flex flex-col w-full gap-2 justify-start items-start">
+                    <div
+                        class="flex flex-row w-full gap-3 justify-start items-center">
+                        <OptionalInput
+                            :id="index"
+                            v-model="form.subTasks[index].title"
+                            name="subTasks[]"
+                            placeholder="e.g. Make Coffee"
+                        />
+                        <button v-if="form.subTasks.length > 1"
+                                class="cursor-pointer"
+                                type="button" @click="deleteSubTask(index)">
+                            <component :is="CrossIcon"></component>
+                        </button>
+                    </div
+                    >
+                    <p v-if="getSubtaskError(index)"
+                       class="text-xs text-red">{{
+                            getSubtaskError(index)
+                        }}</p>
                 </div>
-                <p v-if="form.errors.subTasks" class="text-xs text-red">{{
-                        form
-                            .errors.subTasks
-                    }}</p>
+
                 <button
                     class="w-full h-10 bg-white text-main-purple font-bold text-xs rounded-full"
                     type="button"
