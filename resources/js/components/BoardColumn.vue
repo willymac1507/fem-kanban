@@ -2,17 +2,20 @@
 
 import {Board} from "@/types/data";
 import ColumnTask from "./ColumnTask.vue";
+import {useAttrs} from "vue";
 
 interface Props {
     board: Board
 }
 
 defineProps<Props>()
+const attrs = useAttrs();
 
 </script>
 
 <template>
-    <div v-for="column in board.columns" class="flex flex-col gap-4 w-70">
+    <div v-for="column in board.columns" class="flex flex-col gap-4 w-70"
+         v-bind="attrs">
         <div class="flex flex-row justify-start gap-2 items-center">
                 <span :class="'bg-bullet-' + column.color"
                       class="w-3 h-3 rounded-full"></span>

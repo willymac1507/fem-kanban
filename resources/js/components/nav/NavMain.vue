@@ -31,8 +31,9 @@ const boardCount = computed(() => store.boardsCount)
         <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
                 <div
-                    :class="item.title === activeBoard ? 'text-primary bg-main-purple' : 'text-neutral-600'"
-                    class="flex items-center gap-2 rounded-r-full">
+                    :class="item.title === activeBoard ?
+                    'text-primary bg-main-purple' : 'text-medium-gray'"
+                    class="flex items-center gap-2 rounded-r-full font-bold text-heading-md leading-4.75">
                     <SidebarMenuButton
                         :is-active="item.title === activeBoard"
                         :tooltip="item.title"

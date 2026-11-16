@@ -1,24 +1,19 @@
 <script lang="ts" setup>
 import {useStore} from '@/../stores/stores'
-import {Link, usePage} from '@inertiajs/vue3';
+import {usePage} from '@inertiajs/vue3';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
-import AppLogo from '@/components/AppLogo.vue';
-import NavFooter from '@/components/nav/NavFooter.vue';
 import NavMain from '@/components/nav/NavMain.vue';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
-import {computed, ComputedRef, inject, ref} from "vue";
+import {computed, ComputedRef, inject, watch} from "vue";
 import {boardsKey} from "@/types/injection-keys";
+import HideSidebarIcon from "@/components/icons/HideSidebarIcon.vue";
 
 const {isMobile, toggleSidebar, state} = useSidebar();
 const store = useStore();
@@ -29,13 +24,10 @@ const mainNavItems: ComputedRef<NavItem[]> = computed(() => getNavItems());
 store.activeBoard = mainNavItems.value[0] ? mainNavItems.value[0].title :
     'No Boards';
 store.boardsCount = boards.value!.length;
-const footerNavItems: NavItem[] = [];
 
-const showMobile = ref(false);
-
-function toggleMobile() {
-    showMobile.value = !showMobile.value
-}
+watch(state, () => {
+    store.sidebarState = state.value;
+})
 
 function getNavItems() {
     let items = [];
@@ -51,7 +43,7 @@ function getNavItems() {
 </script>
 
 <template>
-    <div v-if="isMobile && showMobile"
+    <div v-if="isMobile"
          class="flex flex-col items-center absolute inset-0 w-screen h-screen z-5 bg-black opacity-65">
         <div
             class="flex flex-col items-center w-3/4 bg-medium-gray rounded-xl h-1/2 mt-20 z-10">
@@ -60,26 +52,21 @@ function getNavItems() {
             </button>
         </div>
     </div>
+
     <Sidebar v-else class="border-r border-lines" collapsible="offcanvas"
              variant="inset">
-        <SidebarHeader class="mb-10">
-            <SidebarMenu>
-                <SidebarMenuItem>
-                    <SidebarMenuButton as-child size="lg">
-                        <Link :href="dashboard()">
-                            <AppLogo/>
-                        </Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarHeader>
 
-        <SidebarContent>
+        <SidebarContent class="pt-4">
             <NavMain :items="mainNavItems"/>
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems"/>
+            <button
+                class="font-bold text-heading-md leading-4.75 flex flex-row items-center gap-2 px-4 py-2 text-sm text-medium-gray cursor-pointer"
+                @click="toggleSidebar">
+                <HideSidebarIcon class="size-6"/>
+                <span class="pb-2">Hide Sidebar</span>
+            </button>
         </SidebarFooter>
     </Sidebar>
     <slot/>

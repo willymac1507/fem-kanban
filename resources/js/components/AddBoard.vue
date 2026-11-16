@@ -16,7 +16,7 @@ const open = ref(false);
 <template>
     <Dialog v-model:open="open">
         <DialogTrigger
-            class="text-main-purple peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 pl-10.5 text-left outline-hidden ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground  [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-12 cursor-pointer">
+            class="text-main-purple font-bold text-heading-md leading-4.75 peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 pl-10.5 text-left outline-hidden ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground  [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-12 cursor-pointer">
             <component :is="BoardIcon"></component>
             <span>+ Create New Board</span>
         </DialogTrigger>

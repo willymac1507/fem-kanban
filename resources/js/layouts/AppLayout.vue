@@ -4,21 +4,10 @@ import {useStore} from "@/../stores/stores";
 import {computed, provide} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import {boardsKey} from "@/types/injection-keys";
+import {Board} from "@/types/data";
 
 interface Props {
-    boards: Array<{
-        id: number, name: string, columns: Array<{
-            id: number,
-            title: string, tasks: Array<{
-                id: number, title: string,
-                subtasks: Array<{
-                    id: number,
-                    title: string,
-                    is_completed: boolean
-                }>
-            }>
-        }>
-    }>;
+    boards: Board[]
 }
 
 const page = usePage();

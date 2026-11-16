@@ -5,6 +5,7 @@ export const useStore = defineStore('store', {
         return {
             activeBoard: 'No Boards',
             boardsCount: 0,
+            sidebarState: 'expanded',
         }
     }
 })
