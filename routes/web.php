@@ -16,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('boards.tasks.update');
     Route::patch('subtasks/{subtask}', [SubtaskController::class, 'update'])
         ->name('subtasks.update');
+    Route::delete('boards/tasks/{task}', [TaskController::class,
+        'destroy'])->name('boards.tasks.destroy');
 });
 
 require __DIR__.'/settings.php';

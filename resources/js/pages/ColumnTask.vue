@@ -14,6 +14,16 @@ import EditTaskForm from "@/components/forms/EditTaskForm.vue";
 import VerticalElipsisIcon from "@/components/icons/VerticalElipsisIcon.vue";
 import {Checkbox} from "@/components/ui/checkbox";
 import {router} from "@inertiajs/vue3";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle
+} from "@/components/ui/alert-dialog";
 
 interface Props {
     task: Task
@@ -52,12 +62,25 @@ function openEdit() {
     viewMenuOpen.value = false;
     editOpen.value = true;
 }
+
+function openDelete() {
+    viewOpen.value = false;
+    viewMenuOpen.value = false;
+    deleteOpen.value = true;
+}
+
+function deleteTask(id: number) {
+    router.delete(('/boards/tasks/' + id), {
+        preserveState: true,
+        preserveScroll: true,
+    })
+}
 </script>
 
 <template>
 
 
-    <Dialog v-model:open="viewOpen">
+    <Dialog v-model:open="viewOpen" class="">
         <DialogTrigger>
             <div
                 class="w-full bg-dark-gray rounded-lg p-4 flex flex-col gap-2 items-start">
@@ -87,7 +110,8 @@ function openEdit() {
                                 text-medium-gray" @click="openEdit">Edit
                                 Task
                             </button>
-                            <button class="text-left text-sm text-red">Delete
+                            <button class="text-left text-sm text-red"
+                                    @click="openDelete">Delete
                                 Task
                             </button>
                         </div>
@@ -138,5 +162,32 @@ function openEdit() {
         </DialogContent>
 
     </Dialog>
+
+    <AlertDialog v-model:open="deleteOpen">
+        <AlertDialogContent class="w-120 rounded-lg p-8">
+            <AlertDialogHeader>
+                <AlertDialogTitle><h1 class="text-red mb-6">Delete this
+                    task?</h1>
+                </AlertDialogTitle>
+                <AlertDialogDescription
+                    class="text-body-lg text-medium-gray leading-6 mb-6">
+                    Are you sure you want to delete the '{{ task.title }}'
+                    task and its subtasks? This action cannot be reversed.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter
+                class="flex flex-row gap-4 w-full justify-between">
+                <AlertDialogAction
+                    class="w-50 h-10 rounded-full p-4 text-center bg-red text-white hover:text-main-purple font-bold"
+                    @click="deleteTask(task.id)">Delete
+                </AlertDialogAction>
+                <AlertDialogCancel
+                    class="w-50 h-10 rounded-full p-4 text-center bg-white text-main-purple font-bold">
+                    Cancel
+                </AlertDialogCancel>
+
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
 
 </template>
