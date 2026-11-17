@@ -80,7 +80,7 @@ provideSidebarContext({
 <template>
     <TooltipProvider :delay-duration="0">
         <div
-            :class="cn('group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-[calc(svh - 100px)] w-full', props.class)"
+            :class="cn('group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex w-full', props.class)"
             :style="{
         '--sidebar-width': SIDEBAR_WIDTH,
         '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,

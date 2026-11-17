@@ -79,7 +79,9 @@ function submit() {
         <div class="mt-2">
             <Label class="" for="title">Title</Label>
             <Input id="title" v-model="form.title"
-                   placeholder="e.g. Take coffee break" type="text"/>
+                   class="border-input"
+                   placeholder="e.g. Take coffee break"
+                   type="text"/>
             <p v-if="form.errors.title" class="text-xs text-red">{{
                     form
                         .errors.title
@@ -87,7 +89,9 @@ function submit() {
         </div>
         <div>
             <Label for="description">Description</Label>
-            <Textarea id="description" v-model="form.description"
+            <Textarea id="description"
+                      v-model="form.description"
+                      class="border-input"
                       placeholder="e.g. It is always good to take a break. This 15 minute break will recharge the batteries a little."
                       rows="5"/>
             <p v-if="form.errors.description" class="text-xs text-red">{{
@@ -128,13 +132,13 @@ function submit() {
             <Select v-model="status"
                     class="">
                 <SelectTrigger
-                    class="w-full bg-vdark-gray border-medium-gray text-xs font-bold ">
+                    class="w-full border-input text-body-lg">
                     <SelectValue asChild>
                         <span>{{ form.status ? form.status : '' }}</span>
                     </SelectValue>
                 </SelectTrigger>
                 <SelectContent :avoidCollisions="false" align="end"
-                               class="w-full bg-vdark-gray border-medium-gray">
+                               class="w-full border-input">
                     <SelectGroup>
                         <SelectItem v-for="(column, index) in
                         thisBoard?.columns ?? []"

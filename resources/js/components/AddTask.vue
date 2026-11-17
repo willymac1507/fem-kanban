@@ -19,7 +19,7 @@ const open = ref(false);
 <template>
     <Dialog v-model:open="open">
         <DialogTrigger
-            class="bg-main-purple text-sm px-4 rounded-full font-bold h-12">
+            class="bg-main-purple text-primary-foreground text-sm px-4 rounded-full font-bold h-12">
             + Create New Task
         </DialogTrigger>
         <DialogContent class="w-120">

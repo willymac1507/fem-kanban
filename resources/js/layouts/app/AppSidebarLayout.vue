@@ -21,27 +21,30 @@ withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
-const sidebarState = computed(() => store.sidebarState);
+const sidebarState = computed(() => store.sidebarState === 'expanded');
 </script>
 
 <template>
     <AppShell variant="sidebar">
         <div
-            class="w-full bg-vdark-gray border-b border-lines h-25 flex flex-row items-center px-4">
-            <div class="w-75 pl-6">
+            class="w-full bg-sidebar h-25 flex flex-row items-center">
+            <div
+                :class="!sidebarState ? 'border-b border-lines' : ''"
+                class="w-75 pl-10 h-full flex flex-row items-center border-r border-lines">
                 <Link :href="dashboard()">
                     <AppLogo/>
                 </Link>
             </div>
             <div
-                class="flex flex-row grow items-center justify-between pl-2">
+                class="border-b border-lines h-full flex flex-row grow items-center justify-between px-4">
                 <h1>
                     {{ store.activeBoard }}
                 </h1>
                 <AddTask/>
             </div>
         </div>
-        <SidebarProvider :default-open="true" class="relative">
+        <SidebarProvider :default-open="true"
+                         class="relative min-h-(--desktop-sidebar-height)">
             <AppSidebar/>
             <AppContent class="min-w-0 overflow-x-clip">
                 <slot/>

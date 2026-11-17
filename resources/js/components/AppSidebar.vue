@@ -9,15 +9,20 @@ import {
     SidebarFooter,
     useSidebar,
 } from '@/components/ui/sidebar';
+import {Switch} from '@/components/ui/switch'
 import {dashboard} from '@/routes';
 import type {NavItem} from '@/types';
-import {computed, ComputedRef, inject, watch} from "vue";
+import {computed, ComputedRef, inject, ref, watch} from "vue";
 import {boardsKey} from "@/types/injection-keys";
 import HideSidebarIcon from "@/components/icons/HideSidebarIcon.vue";
+import LightThemeIcon from "@/components/icons/LightThemeIcon.vue";
+import DarkThemeIcon from "@/components/icons/DarkThemeIcon.vue";
+import {useAppearance} from "@/composables/useAppearance";
 
 const {isMobile, toggleSidebar, state} = useSidebar();
 const store = useStore();
 const page = usePage();
+const {updateAppearance} = useAppearance();
 const boards = inject(boardsKey, computed(() => []));
 const mainNavItems: ComputedRef<NavItem[]> = computed(() => getNavItems());
 
@@ -27,6 +32,15 @@ store.boardsCount = boards.value!.length;
 
 watch(state, () => {
     store.sidebarState = state.value;
+})
+
+const darkTheme = ref(true);
+watch(darkTheme, () => {
+    if (darkTheme.value) {
+        updateAppearance('dark');
+    } else {
+        updateAppearance('light');
+    }
 })
 
 function getNavItems() {
@@ -60,9 +74,15 @@ function getNavItems() {
             <NavMain :items="mainNavItems"/>
         </SidebarContent>
 
-        <SidebarFooter>
+        <SidebarFooter class="flex flex-col gap-6">
+            <div
+                class="flex flex-row align-center justify-center items-center self-center gap-4 bg-background w-7/8 h-12 rounded-sm">
+                <LightThemeIcon/>
+                <Switch v-model="darkTheme" class="bg-main-purple"/>
+                <DarkThemeIcon/>
+            </div>
             <button
-                class="font-bold text-heading-md leading-4.75 flex flex-row items-center gap-2 px-4 py-2 text-sm text-medium-gray cursor-pointer"
+                class="font-bold text-heading-md leading-4.75 flex flex-row items-center gap-2 px-6 py-2 text-sm text-medium-gray cursor-pointer"
                 @click="toggleSidebar">
                 <HideSidebarIcon class="size-6"/>
                 <span class="pb-2">Hide Sidebar</span>

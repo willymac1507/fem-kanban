@@ -83,7 +83,7 @@ function deleteTask(id: number) {
     <Dialog v-model:open="viewOpen" class="">
         <DialogTrigger>
             <div
-                class="w-full bg-dark-gray rounded-lg p-4 flex flex-col gap-2 items-start">
+                class="w-full bg-sidebar rounded-lg p-4 flex flex-col gap-2 items-start">
                 <h3 class="text-left">{{ task.title }}</h3>
                 <p class="font-bold body-md text-medium-gray">
                     {{ countCompleted(task) }} of {{ countSubtasks(task) }}
@@ -91,7 +91,7 @@ function deleteTask(id: number) {
                 </p>
             </div>
         </DialogTrigger>
-        <DialogContent :showCloseButton="false" class="w-120">
+        <DialogContent :showCloseButton="false" class="w-120 bg-sidebar">
             <DialogHeader>
                 <DialogTitle class="mb-6">
                     <div class="relative flex flex-row items-center gap-2">
@@ -126,22 +126,24 @@ function deleteTask(id: number) {
                 </DialogDescription>
             </DialogHeader>
             <div class="flex flex-col w-full gap-2">
-                <div class="text-xs text-white font-bold">Subtasks ({{
+                <div
+                    class="text-xs text-secondary-foreground font-bold">Subtasks
+                    ({{
                         countCompleted(task)
                     }} of
                     {{ countSubtasks(task) }})
                 </div>
                 <div v-for="subtask in task.subtasks"
-                     class="bg-vdark-gray focus-visible:bg-main-purple/24 flex flex-row gap-4 items-center  rounded-sm p-2"
+                     class="bg-background focus-visible:bg-main-purple/24 flex flex-row gap-4 items-center  rounded-sm p-2"
                 >
                     <Checkbox :id="'toggle'+subtask.id"
                               v-model="subtask.is_completed"
-                              class="bg-dark-gray border-main-purple/24 data-[state=checked]:border-main-purple data-[state=checked]:bg-main-purple data-[state=checked]:text-white"
+                              class="bg-background border-main-purple/24 data-[state=checked]:border-main-purple data-[state=checked]:bg-main-purple data-[state=checked]:text-white"
                               @update:modelValue="updateSubTask(subtask.id!,
                               subtask.is_completed)"
                     />
                     <p :class="subtask.is_completed ? 'text-medium-gray line-through' :
-                    'text-white'"
+                    'text-foreground'"
                        class="text-left text-xs  font-bold">{{
                             subtask.title
                         }}</p>

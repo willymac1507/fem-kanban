@@ -13,7 +13,7 @@
     "dependencies": {
         "@inertiajs/vite": "^3.0.0",
         "@inertiajs/vue3": "^3.0.0",
-        "@lucide/vue": "^1.72.0",
+        "@lucide/vue": "^1.74.0",
         "@vue/devtools-api": "^8.2.1",
         "@vueuse/core": "^12.8.2",
         "class-variance-authority": "^0.7.1",

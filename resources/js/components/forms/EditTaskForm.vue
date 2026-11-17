@@ -108,6 +108,7 @@ function getSubtaskError(index: number): string | undefined {
         <div>
             <Label for="description">Description</Label>
             <Textarea id="description" v-model="form.description"
+                      class="border-input"
                       placeholder="e.g. It is always good to take a break. This 15 minute break will recharge the batteries a little."
                       rows="5"/>
             <p v-if="form.errors.description" class="text-xs text-red">{{
@@ -154,13 +155,16 @@ function getSubtaskError(index: number): string | undefined {
             <Select v-model="status"
                     class="">
                 <SelectTrigger
-                    class="w-full bg-vdark-gray border-medium-gray text-xs font-bold ">
+                    class="border-input w-full text-body-lg">
                     <SelectValue asChild>
-                        <span>{{ form.status ? form.status : '' }}</span>
+                        <span class="text-foreground">{{
+                                form.status ?
+                                    form.status : ''
+                            }}</span>
                     </SelectValue>
                 </SelectTrigger>
                 <SelectContent :avoidCollisions="false" align="end"
-                               class="w-full bg-vdark-gray border-medium-gray">
+                               class="w-full">
                     <SelectGroup>
                         <SelectItem v-for="(column, index) in
                         thisBoard?.columns ?? []"

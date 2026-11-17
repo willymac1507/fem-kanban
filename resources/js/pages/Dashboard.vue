@@ -6,6 +6,8 @@ import {useStore} from "../../stores/stores";
 import {Subtask, Task} from "@/types/data";
 import {boardsKey} from "@/types/injection-keys";
 import BoardColumn from "../components/BoardColumn.vue";
+import ShowSidebarIcon from "@/components/icons/ShowSidebarIcon.vue";
+import {useSidebar} from "@/components/ui/sidebar";
 
 defineOptions({
     layout: {
@@ -17,7 +19,7 @@ defineOptions({
         ],
     },
 });
-
+const {toggleSidebar} = useSidebar();
 const boards = inject(boardsKey, computed(() => []))
 const store = useStore();
 const attrs = useAttrs();
@@ -48,13 +50,14 @@ function sumArray(arr: Array<number>) {
     <Head title="Dashboard"/>
 
     <div
-        class="relative bg-vdark-gray flex h-full flex-1 flex-row gap-4 overflow-x-auto p-4 pl-6"
+        class="relative bg-background flex h-full flex-1 flex-row gap-4 overflow-x-auto p-4 pl-6"
     >
         <BoardColumn :board="board" v-bind="attrs"/>
 
     </div>
-    <div v-if="!sidebarState"
-         class="flex items-center h-12 rounded-r-full bg-main-purple text-heading-m font-bold text-white absolute bottom-10 -left-2 z-10">
-        Hello
-    </div>
+    <button v-if="!sidebarState"
+            class="transition-all transition-discrete flex items-center h-12 rounded-r-full bg-main-purple text-heading-m font-bold text-white absolute bottom-10 left-0 pl-4 pr-6"
+            @click="toggleSidebar">
+        <ShowSidebarIcon/>
+    </button>
 </template>
